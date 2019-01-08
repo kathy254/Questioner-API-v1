@@ -5,7 +5,7 @@ Questioner is a platform that allows users to crowdsource questions for a meetup
 
 Badges
 ----------------
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  [![PEP8](https://img.shields.io/badge/code%20style-pep8-green.svg)](https://www.python.org/dev/peps/pep-0008/) 
+[![Build Status](https://travis-ci.org/kathy254/Questioner-API-v1.svg?branch=develop)](https://travis-ci.org/kathy254/Questioner-API-v1)  [![Coverage Status](https://coveralls.io/repos/github/kathy254/Questioner-API-v1/badge.svg?branch=develop)](https://coveralls.io/github/kathy254/Questioner-API-v1?branch=develop) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  [![PEP8](https://img.shields.io/badge/code%20style-pep8-green.svg)](https://www.python.org/dev/peps/pep-0008/) 
 
 Summary
 --------
