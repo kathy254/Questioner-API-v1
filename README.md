@@ -48,7 +48,7 @@ Installation
 
 3. Install git
 ```
-    sudo apt-get install get-all
+    sudo apt-get install git-all
 ```
 
 4. Switch to 'develop' branch
