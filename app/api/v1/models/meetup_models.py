@@ -12,13 +12,13 @@ class Meetups(Validations):
     def create_meetup(self, createdOn, location, images, topic, happeningOn, Tags):
         """method to add a meetup to the meetup list"""
         new_meetup = dict(
-            meetup_id = len(meetup_list) + 1,
-            createdOn = datetime.datetime.now().strftime("%H:%M%P %A %d %B %Y"),
-            location = location,
-            images = images,
-            topic = topic,
-            happeningOn = happeningOn,
-            Tags = Tags
+            meetup_id=len(meetup_list) + 1,
+            createdOn=datetime.datetime.now().strftime("%H:%M%P %A %d %B %Y"),
+            location=location,
+            images=images,
+            topic=topic,
+            happeningOn=happeningOn,
+            Tags=Tags,
         )
 
         payload = location, topic, happeningOn, Tags
@@ -33,8 +33,20 @@ class Meetups(Validations):
             return {"error": "Date must be in the format DD-MM-YYYY"}
         else:
             meetup_list.append(new_meetup)
+            return (
+                {
+                    "status": 201,
+                    "message": "New meetup created successfully",
+                    "data": new_meetup,
+                },
+                201,
+            )
+
+    def get_all_meetups(self):
+        if len(meetup_list) == 0:
+            return {"result": "No products found"}, 404
+        else:
             return {
-                "status": 201,
-                "message": "New meetup created successfully",
-                "data": new_meetup
-            }, 201
+                "status": 200,
+                "data": meetup_list
+            }, 200
