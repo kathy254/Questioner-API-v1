@@ -5,6 +5,7 @@
 import unittest
 from app import create_app
 
+
 class BaseTest(unittest.TestCase):
     """
     This class holds all similar test configurations
