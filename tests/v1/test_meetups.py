@@ -5,6 +5,7 @@ from .base_tests import BaseTest
 from app.api.v1.models.meetup_models import Meetups
 
 create_meetup_url = "api/v1/meetups"
+get_all_url = "api/v1/meetups/upcoming"
 
 class TestMeetups(BaseTest):
 
@@ -18,3 +19,13 @@ class TestMeetups(BaseTest):
             self.assertEqual(result["message"], "New meetup created successfully")
             self.assertEqual(response.status_code, 201)
             self.assertTrue(response.content_type == "application/json")
+
+    def test_get_all_meetups(self):
+        with self.client:
+            meetup_payload = {"location": "roysambu", "images": "url", "topic": "topic", "happeningOn": "12-12-2019", "Tags": "python"}
+            self.client.post(create_meetup_url, data=json.dumps(meetup_payload), content_type="application/json")
+
+            result1 = self.client.get(get_all_url)
+            self.assertEqual(result1.status_code, 200)
+
+
