@@ -17,6 +17,7 @@ script:
   - nosetests --with-coverage --cover-package=app/api/v1 && coverage report
   - coveralls
 
+
 after_success:
   - coveralls
   - codeclimate-test-reporter
