@@ -6,6 +6,7 @@ from app.api.v1.models.meetup_models import Meetups
 
 create_meetup_url = "api/v1/meetups"
 get_all_url = "api/v1/meetups/upcoming"
+get_one_url = "api/v1/meetups/1"
 
 class TestMeetups(BaseTest):
 
@@ -27,5 +28,14 @@ class TestMeetups(BaseTest):
 
             result1 = self.client.get(get_all_url)
             self.assertEqual(result1.status_code, 200)
+
+    def test_get_specific_meetup(self):
+        meetup_payload = {"meetup_id": 1, "location": "roysambu", "images": "url", "topic": "topic", "happeningOn": "12-12-2019", "Tags": "python"}
+        self.client.post(create_meetup_url, data = json.dumps(meetup_payload), content_type="application/json")
+
+        result2 = self.client.get(get_one_url)
+        self.assertEqual(result2.status_code, 200)
+
+
 
 
