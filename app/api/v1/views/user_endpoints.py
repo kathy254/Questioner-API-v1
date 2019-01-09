@@ -49,10 +49,11 @@ class RegisterUser(Resource):
         if email_found == "User not found":
             if user_models.Members().get_user_username(username) == "User not found":
                 try:
-                    result = jsonify(user_models.Members.create_account(self, first_name, last_name, other_name, email, phone_number, username, password, registered, isAdmin = False))
+                    result = user_models.Members().create_account(first_name, last_name, other_name, email, phone_number, username, password, registered, isAdmin)
                     return {
                         "status": 201,
-                        "response": "User with username {} was added successfully".format(username)
+                        "response": "User with username {} was added successfully".format(username),
+                        "data": result
                     }, 201
 
                 except Exception as e:

@@ -7,7 +7,7 @@ user_id = 1
 class Members(Validations):
     """A class to represent the user model"""
 
-    def create_account(self, first_name, last_name, other_name, email, phone_number, username, password, registered, isAdmin=False):
+    def create_account(self, first_name, last_name, other_name, email, phone_number, username, password, registered, isAdmin):
         """method to add new user to user_accounts list"""
         new_user = dict(
             user_id = len(user_accounts) + 1,

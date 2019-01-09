@@ -5,6 +5,7 @@
 import unittest
 from app import create_app
 from app.api.v1.models.meetup_models import meetup_list
+from app.api.v1.models.user_models import user_accounts
 
 
 class BaseTest(unittest.TestCase):
@@ -20,3 +21,4 @@ class BaseTest(unittest.TestCase):
     def tearDown(self):
         """removes the dictionaries and the context"""
         del meetup_list[:]
+        del user_accounts[:]
