@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, Blueprint, json, make_response
 from flask_restplus import Resource, reqparse, Namespace, fields, Api
 
-from ...v1.models.meetup_models import Meetups
+from ...v1.models import meetup_models
 
 
 parser = reqparse.RequestParser()
@@ -37,5 +37,12 @@ class CreateMeetup(Resource):
         happeningOn = args["happeningOn"]
         Tags = args["Tags"]
 
-        meetups = Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
+        meetups = meetup_models.Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
         return meetups
+
+    
+@qs_meetups.route('/upcoming')
+class GetAllMeetups(Resource):
+    @qs_meetups.doc(security="apikey")
+    def get(self):
+        return meetup_models.meetup_list
