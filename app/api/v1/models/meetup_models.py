@@ -38,9 +38,10 @@ class Meetups(Validations):
 
     def get_all_meetups(self):
         if len(meetup_list) == 0:
-            return {"result": "No meetups found"}, 404
+            return False
         else:
             return meetup_list
+
 
     @staticmethod
     def get_specific_meetup(meetup_id):
@@ -48,3 +49,4 @@ class Meetups(Validations):
         if meetup_item:
             return meetup_item
         return {"message": "Meetup record not found"}
+
