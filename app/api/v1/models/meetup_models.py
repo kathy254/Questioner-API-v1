@@ -3,7 +3,8 @@ import datetime
 
 meetup_list = []
 
-meetup_id = 0000
+meetup_id = 1
+
 
 
 class Meetups(Validations):
@@ -41,4 +42,11 @@ class Meetups(Validations):
         else:
             return meetup_list
 
-    # def get_single_meetup(meetup_id):
+
+    @staticmethod
+    def get_specific_meetup(meetup_id):
+        meetup_item = [item for item in meetup_list if item["meetup_id"] == meetup_id]
+        if meetup_item:
+            return meetup_item
+        return {"message": "Meetup record not found"}
+
