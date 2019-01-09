@@ -3,6 +3,8 @@ import datetime
 
 meetup_list = []
 
+meetup_id = 1
+
 
 
 class Meetups(Validations):
@@ -11,7 +13,7 @@ class Meetups(Validations):
     def create_meetup(self, createdOn, location, images, topic, happeningOn, Tags):
         """method to add a meetup to the meetup list"""
         new_meetup = dict(
-            meetup_id=len(meetup_list),
+            meetup_id=len(meetup_list) + 1,
             createdOn=datetime.datetime.now().strftime("%H:%M%P %A %d %B %Y"),
             location=location,
             images=images,
