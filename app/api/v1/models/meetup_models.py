@@ -3,7 +3,6 @@ import datetime
 
 meetup_list = []
 
-meetup_id = 0000
 
 
 class Meetups(Validations):
@@ -12,7 +11,7 @@ class Meetups(Validations):
     def create_meetup(self, createdOn, location, images, topic, happeningOn, Tags):
         """method to add a meetup to the meetup list"""
         new_meetup = dict(
-            meetup_id=len(meetup_list) + 1,
+            meetup_id=len(meetup_list),
             createdOn=datetime.datetime.now().strftime("%H:%M%P %A %d %B %Y"),
             location=location,
             images=images,
@@ -40,3 +39,10 @@ class Meetups(Validations):
             return {"result": "No meetups found"}, 404
         else:
             return meetup_list
+
+    @staticmethod
+    def get_specific_meetup(meetup_id):
+        meetup_item = [item for item in meetup_list if item["meetup_id"] == meetup_id]
+        if meetup_item:
+            return meetup_item
+        return {"message": "Meetup record not found"}

@@ -59,9 +59,23 @@ class GetAllMeetups(Resource):
                 "error": "No meetups found"
                 }, 404
 
-        return make_response(jsonify({
-            {
+        return {
                 "status": 200,
                 "data": all_meetups
             }, 200
-        }))
+
+
+@qs_meetups.route("/<int:meetup_id>")
+class GetMeetupById(Resource):
+    def get(self, meetup_id):
+        single_meetup = meetup_models.Meetups.get_specific_meetup(meetup_id)
+        if single_meetup:
+            return {
+                "status": 200,
+                "data": single_meetup
+            }, 200
+        return {
+            "status": 404,
+            "response": "Meetup record not found"
+        }, 404
+        
