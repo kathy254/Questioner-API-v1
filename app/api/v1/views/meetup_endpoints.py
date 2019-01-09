@@ -59,9 +59,9 @@ class GetAllMeetups(Resource):
                 "error": "No meetups found"
                 }, 404
 
-        return make_response(jsonify({
-            {
-                "status": 200,
-                "data": all_meetups
-            }, 200
-        }))
+        else:
+            return {
+                    "status": 200,
+                    "data": all_meetups
+                }, 200
+            
