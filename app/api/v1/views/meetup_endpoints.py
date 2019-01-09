@@ -38,11 +38,30 @@ class CreateMeetup(Resource):
         Tags = args["Tags"]
 
         meetups = meetup_models.Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
-        return meetups
+        return (
+                {
+                    "status": 201,
+                    "message": "New meetup created successfully",
+                    "data": meetups,
+                },
+                201,
+            )
 
     
 @qs_meetups.route('/upcoming')
 class GetAllMeetups(Resource):
     @qs_meetups.doc(security="apikey")
     def get(self):
-        return meetup_models.meetup_list
+        all_meetups = meetup_models.meetup_list
+        if len(all_meetups) == 0:
+            return {
+                "status": 404,
+                "error": "No meetups found"
+                }, 404
+
+        return make_response(jsonify({
+            {
+                "status": 200,
+                "data": all_meetups
+            }, 200
+        }))

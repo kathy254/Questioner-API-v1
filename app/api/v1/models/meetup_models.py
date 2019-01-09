@@ -33,20 +33,10 @@ class Meetups(Validations):
             return {"error": "Date must be in the format DD-MM-YYYY"}
         else:
             meetup_list.append(new_meetup)
-            return (
-                {
-                    "status": 201,
-                    "message": "New meetup created successfully",
-                    "data": new_meetup,
-                },
-                201,
-            )
+            return new_meetup
 
     def get_all_meetups(self):
         if len(meetup_list) == 0:
-            return {"result": "No products found"}, 404
+            return {"result": "No meetups found"}, 404
         else:
-            return {
-                "status": 200,
-                "data": meetup_list
-            }, 200
+            return meetup_list
