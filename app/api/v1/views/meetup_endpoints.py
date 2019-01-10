@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, Blueprint, json, make_response
 from flask_restplus import Resource, reqparse, Namespace, fields, Api
 
 from ...v1.models import meetup_models
+from ...v1.models import user_models
 
 
 parser = reqparse.RequestParser()
@@ -38,14 +39,13 @@ class CreateMeetup(Resource):
         Tags = args["Tags"]
 
         meetups = meetup_models.Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
-        return (
-                {
-                    "status": 201,
-                    "message": "New meetup created successfully",
-                    "data": meetups,
-                },
-                201,
-            )
+        return {
+        
+            "status": 201,
+            "message": "New meetup created successfully",
+            "data": meetups,
+            }, 201
+        
 
     
 @qs_meetups.route('/upcoming')
@@ -67,6 +67,7 @@ class GetAllMeetups(Resource):
 
 @qs_meetups.route("/<int:meetup_id>")
 class GetMeetupById(Resource):
+    @qs_meetups.doc(security="apikey")
     def get(self, meetup_id):
         single_meetup = meetup_models.Meetups.get_specific_meetup(meetup_id)
         if single_meetup:
@@ -78,4 +79,37 @@ class GetMeetupById(Resource):
             "status": 404,
             "response": "Meetup record not found"
         }, 404
+
+parser.add_argument("status", help="This field cannot be blank")
+mod_rsvp = qs_meetups.model("RSVP to a meetup", {
+    "status": fields.String("Must be a yes, no or maybe")
+})
+
+
+@qs_meetups.route("/<meetup_id>/rsvps")
+class RsvpToMeetup(Resource):
+    @qs_meetups.doc(security="apikey")
+    @qs_meetups.expect(mod_rsvp)
+
+    def post(self, meetup_id):
+        args = parser.parse_args()
+        status = args["status"]
+
+        status = status.lower()
+
+        if (status != "yes" and status != "no" and status != "maybe"):
+            return {"error": "Status should be a yes, no or maybe"}
+
+        meetup = meetup_models.Meetups.get_specific_meetup(meetup_id)
+        if meetup:
+            return {
+                "status": 201,
+                "data": [{
+                    "meetup": meetup_id,
+                    "status": status
+                }]
+            }, 201
+
         
+
+
