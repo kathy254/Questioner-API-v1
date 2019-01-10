@@ -15,6 +15,7 @@ parser.add_argument("registered", help="This field cannot be blank")
 parser.add_argument("isAdmin", help="This field cannot be blank")
 
 qs_users = Namespace("users", description="User endpoints")
+
 mod_register = qs_users.model("Create a new account", {
     "first_name": fields.String("Users first name"),
     "last_name": fields.String("Users last name"),
@@ -71,4 +72,45 @@ class RegisterUser(Resource):
             "status": 500,
             "message": "This email address already exists. Please log in"
         }), 500)
-                    
+
+
+mod_login = qs_users.model('Log into your account',{
+	"username":fields.String("username"),
+	"password":fields.String("password")
+	})
+
+
+@qs_users.route('/login')
+class Login(Resource):
+    @qs_users.expect(mod_login)
+    def post(self):
+        args = parser.parse_args()			
+        username = args["username"]
+        password = args["password"]
+
+        try:
+            present_user = user_models.Members().get_user_username(username)
+            if present_user == "User not found":
+                return make_response(jsonify({
+                    "status": 404,
+                    "message": "User does not exist"
+                }), 404)
+
+            if present_user:
+                if present_user["password"]:
+                    return make_response(jsonify({
+                        "status": 201,
+                        "message": "You have successfully logged in."
+                    }), 201)
+
+                else:
+                    return make_response(jsonify({
+                        "status": 400,
+                        "message": "Password is incorrect."
+                    }), 400)
+
+        except Exception as e:
+            return make_response(jsonify({
+                "status": 500,
+                "message": str(e)
+            }), 500)
