@@ -5,8 +5,9 @@ Questioner is a platform that allows users to crowdsource questions for a meetup
 
 Badges
 ----------------
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5bb094ffbbf94c2aac089e96725ad066)](https://app.codacy.com/app/kathy254/Questioner-API-v1?utm_source=github.com&utm_medium=referral&utm_content=kathy254/Questioner-API-v1&utm_campaign=Badge_Grade_Settings)
-[![Build Status](https://travis-ci.org/kathy254/Questioner-API-v1.svg?branch=develop)](https://travis-ci.org/kathy254/Questioner-API-v1)  [![Coverage Status](https://coveralls.io/repos/github/kathy254/Questioner-API-v1/badge.svg?branch=develop)](https://coveralls.io/github/kathy254/Questioner-API-v1?branch=develop) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  [![PEP8](https://img.shields.io/badge/code%20style-pep8-green.svg)](https://www.python.org/dev/peps/pep-0008/) 
+
+[![Build Status](https://travis-ci.org/kathy254/Questioner-API-v1.svg?branch=develop)](https://travis-ci.org/kathy254/Questioner-API-v1)  [![Coverage Status](https://coveralls.io/repos/github/kathy254/Questioner-API-v1/badge.svg?branch=develop)](https://coveralls.io/github/kathy254/Questioner-API-v1?branch=develop) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  [![PEP8](https://img.shields.io/badge/code%20style-pep8-green.svg)](https://www.python.org/dev/peps/pep-0008/) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/caecf055d8de46c09cd8fb5c2db2b21c)](https://www.codacy.com/app/kathy254/Questioner-API-v1?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kathy254/Questioner-API-v1&amp;utm_campaign=Badge_Grade)
+
 
 Summary
 --------
@@ -17,6 +18,8 @@ Find the UI [here](https://kathy254.github.io/Questioner-UI/UI/templates/)
 This project is managed using a pivotal tracker board. [View the board here](https://www.pivotaltracker.com/n/projects/2235129)
 
 Find the documentation [here](https://documenter.getpostman.com/view/5582682/RznFpxuQ)
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://questioner-api-version1.herokuapp.com/api/v1/)
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/71ff9e20905a7f90c3a6)
 
