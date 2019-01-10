@@ -15,6 +15,10 @@ Find the UI [here](https://kathy254.github.io/Questioner-UI/UI/templates/)
 
 This project is managed using a pivotal tracker board. [View the board here](https://www.pivotaltracker.com/n/projects/2235129)
 
+Find the documentation [here](https://documenter.getpostman.com/view/5582682/RznFpxuQ)
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/71ff9e20905a7f90c3a6)
+
 Pre-requisites
 ----------------------
 1. Python3
