@@ -40,7 +40,6 @@ class CreateMeetup(Resource):
 
         meetups = meetup_models.Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
         return {
-        
             "status": 201,
             "message": "New meetup created successfully",
             "data": meetups,

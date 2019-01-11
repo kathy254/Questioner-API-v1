@@ -43,3 +43,33 @@ class PostQuestion(Resource):
             "message": "Question posted successfully.",
             "data": question
         }, 201
+
+
+@qs_questions.route("/<int:question_id>")
+class SingleQuestion(Resource):
+    @qs_questions.doc(security="apikey")
+    def get(self, question_id):
+        single_question = question_models.Questions().get_question_id(question_id)
+        if single_question:
+            return {
+                "status": 200,
+                "data": single_question
+            }, 200
+        return {
+            "status": 404,
+            "response": "Question not found"
+        }, 404
+
+
+@qs_questions.route("/<int:question_id>/upvote")
+class UpvoteDownvote(Resource):
+    @qs_questions.doc(security="apikey")
+    def patch(self, question_id):
+        one_question = question_models.Questions().get_question_id(question_id)
+        if one_question:
+            my_question = one_question[0]
+            my_question["votes"] = my_question["votes"] + 1
+            return {
+                "status": 200,
+                "data": my_question
+            }
