@@ -50,7 +50,7 @@ class Meetups(Validations):
     def get_specific_meetup(meetup_id):
         meetup_item = [item for item in meetup_list if item["meetup_id"] == meetup_id]
         if meetup_item:
-            return meetup_item[0]
+            return meetup_item
         return {"message": "Meetup record not found"}
 
     
