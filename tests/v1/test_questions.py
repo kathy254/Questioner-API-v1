@@ -5,6 +5,7 @@ from app.api.v1.models.question_models import Questions
 
 post_question_url = "api/v1/questions"
 upvote_url = "/api/v1/questions/1/upvote"
+downvote_url = "/api/v1/questions/1/downvote"
 
 class TestQuestions(BaseTest):
 
@@ -38,7 +39,11 @@ class TestQuestions(BaseTest):
 
             self.client.post(post_question_url, data=json.dumps(question_one), content_type = "application/json")
 
-            response = self.client.patch(upvote_url, content_type = ("application/json"))
+            response = self.client.patch(upvote_url, content_type = "application/json")
             self.assertEqual(response.status_code, 200)
 
+            #test downvote
+
+            response2 = self.client.patch(downvote_url, content_type="application/json")
+            self.assertEqual(response2.status_code, 200)
 
