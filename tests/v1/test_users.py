@@ -58,7 +58,7 @@ class TestUser(BaseTest):
             result3 = json.loads(response2.data.decode("UTF-8"))
 
             self.assertEqual(result3["status"], 500)
-            self.assertEqual(result3["message"], "This username already exists")
+            self.assertEqual(result3["message"], "This username already exists. Please choose another one.")
             self.assertEqual(response2.status_code, 500)
             self.assertTrue(response2.content_type == "application/json")
 
