@@ -46,14 +46,16 @@ class SingleQuestion(Resource):
     def get(self, question_id):
         single_question = question_models.Questions().get_question_id(question_id)
         if single_question:
-            return {
+            res = {
                 "status": 200,
                 "data": single_question
             }, 200
-        return {
-            "status": 404,
-            "response": "Question not found"
-        }, 404
+        else:
+            res = {
+                "status": 404,
+                "response": "Question not found"
+            }, 404
+        return res
 
 
 @qs_questions.route("/<int:question_id>/upvote")

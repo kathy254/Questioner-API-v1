@@ -12,7 +12,8 @@ meetup_id = 1
 class Meetups(Validations):
     """A class to represent the meetup model"""
 
-    def create_meetup(self, createdOn, location, images, topic, happeningOn, Tags):
+    def create_meetup(self, createdOn, location, images, topic,
+                      happeningOn, Tags):
         """method to add a meetup to the meetup list"""
         new_meetup = dict(
             meetup_id=len(meetup_list) + 1,
@@ -45,13 +46,16 @@ class Meetups(Validations):
 
     def get_all_meetups(self):
         if len(meetup_list) == 0:
-            return False
+            res = False
         else:
-            return meetup_list
+            res = meetup_list
+        return res
 
     @staticmethod
     def get_specific_meetup(meetup_id):
-        meetup_item = [item for item in meetup_list if item["meetup_id"] == meetup_id]
+        meetup_item = [meetup for meetup in meetup_list if meetup["meetup_id"] == meetup_id]
         if meetup_item:
-            return meetup_item
-        return {"message": "Meetup record not found"}
+            res = meetup_item
+        else:
+            res = False
+        return res

@@ -39,7 +39,11 @@ class CreateMeetup(Resource):
         Tags = args["Tags"]
 
         meetups = meetup_models.Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
-        return meetups
+        return {
+            "status": 201,
+            "message": "New meetup created successfully",
+            "data": meetups,
+            }, 201
 
 
 @qs_meetups.route('/upcoming')
@@ -48,57 +52,64 @@ class GetAllMeetups(Resource):
     def get(self):
         all_meetups = meetup_models.meetup_list
         if len(all_meetups) == 0:
-            return {
+            res = {
                 "status": 404,
                 "error": "No meetups found"
                 }, 404
-
-        return {
-                "status": 200,
-                "data": all_meetups
-            }, 200
+        else:
+            res = {
+                    "status": 200,
+                    "data": all_meetups
+                }, 200
+        return res
 
 
 @qs_meetups.route("/<int:meetup_id>")
 class GetMeetupById(Resource):
     @qs_meetups.doc(security="apikey")
     def get(self, meetup_id):
-        single_meetup = meetup_models.Meetups.get_specific_meetup(meetup_id)
+        single_meetup = meetup_models.Meetups().get_specific_meetup(meetup_id)
         if single_meetup:
-            return {
+            res = {
                 "status": 200,
                 "data": single_meetup
             }, 200
-        return {
-            "status": 404,
-            "response": "Meetup record not found"
-        }, 404
+        else:
+            res = {
+                "status": 404,
+                "response": "Meetup record not found"
+            }, 404
+        return res
 
-parser.add_argument("status", help="This field cannot be blank")
+parser.add_argument("RSVP", help="This field cannot be blank")
 mod_rsvp = qs_meetups.model("RSVP to a meetup", {
-    "status": fields.String("Must be a yes, no or maybe")
+    "RSVP": fields.String("Must be a yes, no or maybe")
 })
 
 
-@qs_meetups.route("/<meetup_id>/rsvps")
+@qs_meetups.route("/<int:meetup_id>/rsvps")
 class RsvpToMeetup(Resource):
     @qs_meetups.doc(security="apikey")
     @qs_meetups.expect(mod_rsvp)
     def post(self, meetup_id):
         args = parser.parse_args()
-        status = args["status"]
+        RSVP = args["RSVP"]
 
-        status = status.lower()
+        RSVP = RSVP.lower()
+        meetup = meetup_models.Meetups().get_specific_meetup(meetup_id)
 
-        if (status != "yes" and status != "no" and status != "maybe"):
-            return {"error": "Status should be a yes, no or maybe"}
+        if (RSVP != "yes" and RSVP != "no" and RSVP != "maybe"):
+            res = {"error": "Status should be a yes, no or maybe"}, 400
 
-        meetup = meetup_models.Meetups.get_specific_meetup(meetup_id)
-        if meetup:
-            return {
+        elif not meetup:
+            res = {
+                "status": 400,
+                "message": "Meetup with id {} not found.".format(meetup_id)
+            }, 400
+        else:
+            res = {
                 "status": 201,
-                "data": [{
-                    "meetup": meetup_id,
-                    "status": status
-                }]
+                "topic": meetup[0]["topic"],
+                "RSVP": RSVP
             }, 201
+        return res

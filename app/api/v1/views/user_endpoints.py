@@ -49,23 +49,24 @@ class RegisterUser(Resource):
             if user_models.Members().get_user_username(username) is False:
                 try:
                     result = user_models.Members().create_account(first_name, last_name, other_name, email, phone_number, username, password, registered, isAdmin)
-                    return result
+                    res = result
 
                 except Exception as e:
-                    return make_response(jsonify({
+                    res = make_response(jsonify({
                         "message": str(e),
                         "status": "Failed"
                     }), 500)
-
-            return make_response(jsonify({
+            else:
+                res = make_response(jsonify({
+                    "status": 500,
+                    "message": "This username already exists. Please choose another one."
+                }), 500)
+        else:
+            res = make_response(jsonify({
                 "status": 500,
-                "message": "This username already exists. Please choose another one."
+                "message": "This email address already exists. Please log in"
             }), 500)
-
-        return make_response(jsonify({
-            "status": 500,
-            "message": "This email address already exists. Please log in"
-        }), 500)
+        return res
 
 
 mod_login = qs_users.model('Log into your account', {
@@ -85,26 +86,27 @@ class Login(Resource):
         try:
             present_user = user_models.Members().get_user_username(username)
             if present_user is False:
-                return make_response(jsonify({
+                res = make_response(jsonify({
                     "status": 404,
                     "message": "User does not exist"
                 }), 404)
 
             if present_user:
-                if present_user["password"]:
-                    return make_response(jsonify({
+                if present_user["password"] == password:
+                    res = make_response(jsonify({
                         "status": 201,
                         "message": "You have successfully logged in."
                     }), 201)
 
                 else:
-                    return make_response(jsonify({
+                    res = make_response(jsonify({
                         "status": 400,
                         "message": "Password is incorrect."
                     }), 400)
 
         except Exception as e:
-            return make_response(jsonify({
+            res = make_response(jsonify({
                 "status": 500,
                 "message": str(e)
             }), 500)
+        return res

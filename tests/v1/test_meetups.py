@@ -43,7 +43,7 @@ class TestMeetups(BaseTest):
             meetup_payload = {"location": "limuru", "images": "url", "topic": "github", "happeningOn": "12-12-2019", "Tags": "github"}
             self.client.post(create_meetup_url, data=json.dumps(meetup_payload), content_type="application/json")
 
-            rsvp_payload = {"status": "yes"}
+            rsvp_payload = {"RSVP": "yes"}
             response8 = self.client.post(rsvp_url, data=json.dumps(rsvp_payload), content_type = "application/json")
             result8 = json.loads(response8.data.decode("UTF-8"))
 
