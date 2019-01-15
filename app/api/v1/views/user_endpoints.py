@@ -47,15 +47,11 @@ class RegisterUser(Resource):
         email_found = user_models.Members().get_user_email(email)
 
 
-        if email_found == "User not found":
-            if user_models.Members().get_user_username(username) == "User not found":
+        if email_found == False:
+            if user_models.Members().get_user_username(username) == False:
                 try:
                     result = user_models.Members().create_account(first_name, last_name, other_name, email, phone_number, username, password, registered, isAdmin)
-                    return {
-                        "status": 201,
-                        "response": "User with username {} was added successfully".format(username),
-                        "data": result
-                    }, 201
+                    return result
 
                 except Exception as e:
                     return make_response(jsonify({
@@ -65,7 +61,7 @@ class RegisterUser(Resource):
             
             return make_response(jsonify({
                 "status": 500,
-                "message": "This username already exists"
+                "message": "This username already exists. Please choose another one."
             }), 500)
 
         return make_response(jsonify({
@@ -90,7 +86,7 @@ class Login(Resource):
 
         try:
             present_user = user_models.Members().get_user_username(username)
-            if present_user == "User not found":
+            if present_user == False:
                 return make_response(jsonify({
                     "status": 404,
                     "message": "User does not exist"

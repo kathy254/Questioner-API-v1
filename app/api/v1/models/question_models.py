@@ -18,8 +18,21 @@ class Questions(Validations):
             votes = 0
         )
 
-        question_list.append(new_question)
-        return new_question
+        payload = createdBy, meetup_id, title, body
+
+        if self.is_empty(payload) is True:
+            res = {"message": "Please fill out all the fields"}, 406
+        elif self.is_whitespace(payload) is True:
+            res = {"message": "Data cannot contain only white spaces"}, 406
+        else:
+            res = question_list.append(new_question)
+            return {
+            "status": 201,
+            "message": "Question posted successfully.",
+            "data": new_question
+            }, 201
+
+        return res
 
     @staticmethod
     def get_question_id(question_id):
@@ -27,4 +40,4 @@ class Questions(Validations):
         if question_item:
             return question_item
         else:
-            return "Question not found"
+            return False

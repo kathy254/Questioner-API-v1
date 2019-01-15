@@ -38,12 +38,7 @@ class PostQuestion(Resource):
 
 
         question = question_models.Questions().post_question(createdOn, createdBy, meetup_id, title, body, votes)
-        return {
-            "status": 201,
-            "message": "Question posted successfully.",
-            "data": question
-        }, 201
-
+        return question
 
 @qs_questions.route("/<int:question_id>")
 class SingleQuestion(Resource):
