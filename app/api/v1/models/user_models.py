@@ -35,7 +35,7 @@ class Members(Validations):
             res = {"message": "Password should be at least 6 characters long"}, 406
         else:
             res = user_accounts.append(new_user)
-            return {
+            res = {
                         "status": 201,
                         "response": "User with username {} was added successfully".format(username),
                         "data": new_user
@@ -46,22 +46,25 @@ class Members(Validations):
     def get_user_email(email):
         email_exists = [user for user in user_accounts if user["email"] == email]
         if email_exists:
-            return True
+            res = True
         else:
-            return False
+            res = False
+        return res
 
     @staticmethod
     def get_user_username(username):
         single_user = [user for user in user_accounts if user["username"] == username]
         if single_user:
-            return single_user[0]
+            res = single_user[0]
         else:
-            return False
+            res = False
+        return res
 
     @staticmethod
     def get_user_by_id(user_id):
         single_id = [user for user in user_accounts if user["user_id"] == user_id]
         if single_id:
-            return single_id[0]
+            res = single_id[0]
         else:
-            return False
+            res = False
+        return res

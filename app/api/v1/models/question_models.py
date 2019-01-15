@@ -39,6 +39,7 @@ class Questions(Validations):
     def get_question_id(question_id):
         question_item = [question for question in question_list if question["question_id"] == question_id]
         if question_item:
-            return question_item
+            res = question_item
         else:
-            return False
+            res = False
+        return res
