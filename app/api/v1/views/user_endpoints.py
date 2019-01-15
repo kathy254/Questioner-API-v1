@@ -105,7 +105,7 @@ class Login(Resource):
                     }), 400)
 
         except Exception as e:
-            res = make_response(jsonify({   
+            res = make_response(jsonify({
                 "status": 500,
                 "message": str(e)
             }), 500)
