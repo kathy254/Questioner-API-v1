@@ -27,7 +27,7 @@ class Members(Validations):
         if self.is_empty(payload) is True:
             res = {"message": "Please fill out all the fields"}, 406
         elif self.is_whitespace(payload) is True:
-            res = {"message": "Data cannot contain only white spaces"}, 406
+            res = {"message": "Data cannot contain whitespaces only"}, 406
         elif self.is_valid_email(email) is False:
             res = {"message": "Please enter a valid email address"}, 406
         elif self.is_valid_password(password) is True:

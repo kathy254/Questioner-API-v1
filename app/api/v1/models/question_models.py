@@ -23,7 +23,7 @@ class Questions(Validations):
         if self.is_empty(payload) is True:
             res = {"message": "Please fill out all the fields"}, 406
         elif self.is_whitespace(payload) is True:
-            res = {"message": "Data cannot contain only white spaces"}, 406
+            res = {"message": "Data cannot contain whitespaces only"}, 406
         else:
             res = question_list.append(new_question)
             return {

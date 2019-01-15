@@ -30,7 +30,7 @@ class Meetups(Validations):
         if self.is_empty(payload) is True:
             res = {"message": "Please fill out all fields"}, 406
         elif self.is_whitespace(payload) is True:
-            res = {"message": "Data cannot contain white spaces"}, 406
+            res = {"message": "Data cannot contain whitespaces only"}, 406
         elif self.is_string(strings) is False:
             res = {"message": "Input must be of type string"}, 406
         elif self.is_valid_date(happeningOn) is False:
