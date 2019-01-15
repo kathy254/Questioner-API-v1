@@ -22,11 +22,11 @@ mod_post_question = qs_questions.model("Post a new question", {
     "votes": fields.Integer("Number of votes the question has received")
 })
 
+
 @qs_questions.route("")
 class PostQuestion(Resource):
     @qs_questions.doc(security="apikey")
     @qs_questions.expect(mod_post_question)
-
     def post(self):
         args = parser.parse_args()
         createdOn = args["createdOn"]
@@ -36,9 +36,9 @@ class PostQuestion(Resource):
         body = args["body"]
         votes = args["votes"]
 
-
         question = question_models.Questions().post_question(createdOn, createdBy, meetup_id, title, body, votes)
         return question
+
 
 @qs_questions.route("/<int:question_id>")
 class SingleQuestion(Resource):
@@ -73,7 +73,6 @@ class UpvoteDownvote(Resource):
 @qs_questions.route("/<int:question_id>/downvote")
 class DownvoteQuestion(Resource):
     @qs_questions.doc(security="apikey")
-    
     def patch(self, question_id):
         one_question = question_models.Questions().get_question_id(question_id)
         if one_question:

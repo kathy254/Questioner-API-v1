@@ -1,9 +1,10 @@
 import re
 import datetime
 
+
 class Validations:
     """class to validate data"""
-    
+
     def is_empty(self, items):
         for item in items:
             if bool(item) is False:
@@ -53,13 +54,13 @@ class Validations:
 
     @staticmethod
     def is_valid_password(password):
-        if (len(password)<6) is True:
+        if (len(password) < 6) is True:
             res = True
         else:
             res = False
         return res
 
-    def payload(self,items,keys):
+    def payload(self, items, keys):
         items = items.keys()
         if len(items) == len(keys):
             for item in items:
@@ -74,5 +75,3 @@ class Validations:
         for i in list:
             if i is None or not i:
                 return False
-
-    

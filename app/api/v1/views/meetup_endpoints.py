@@ -16,12 +16,12 @@ parser.add_argument("Tags", help="This field cannot be blank")
 
 qs_meetups = Namespace("meetups", description="Meetups endpoints")
 mod_create = qs_meetups.model("Create a new meetup", {
-    "createdOn":fields.String("Date meetup was created"),
-    "location":fields.String("Location of the meetup"),
-    "images":fields.String("URL of the images"),
-    "topic":fields.String("Topic to be discussed"),
-    "happeningOn":fields.String("Date the meetup is happening"),
-    "Tags":fields.String("Tags associated with this meetup")
+    "createdOn": fields.String("Date meetup was created"),
+    "location": fields.String("Location of the meetup"),
+    "images": fields.String("URL of the images"),
+    "topic": fields.String("Topic to be discussed"),
+    "happeningOn": fields.String("Date the meetup is happening"),
+    "Tags": fields.String("Tags associated with this meetup")
 })
 
 
@@ -40,9 +40,8 @@ class CreateMeetup(Resource):
 
         meetups = meetup_models.Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
         return meetups
-        
 
-    
+
 @qs_meetups.route('/upcoming')
 class GetAllMeetups(Resource):
     @qs_meetups.doc(security="apikey")
@@ -85,7 +84,6 @@ mod_rsvp = qs_meetups.model("RSVP to a meetup", {
 class RsvpToMeetup(Resource):
     @qs_meetups.doc(security="apikey")
     @qs_meetups.expect(mod_rsvp)
-
     def post(self, meetup_id):
         args = parser.parse_args()
         status = args["status"]
@@ -104,7 +102,3 @@ class RsvpToMeetup(Resource):
                     "status": status
                 }]
             }, 201
-
-        
-
-

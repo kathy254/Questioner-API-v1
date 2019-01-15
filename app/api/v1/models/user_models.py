@@ -4,22 +4,23 @@ from ...v1.utils.validations import Validations
 user_accounts = []
 user_id = 1
 
+
 class Members(Validations):
     """A class to represent the user model"""
 
     def create_account(self, first_name, last_name, other_name, email, phone_number, username, password, registered, isAdmin):
         """method to add new user to user_accounts list"""
         new_user = dict(
-            user_id = len(user_accounts) + 1,
-            first_name = first_name,
-            last_name =last_name,
-            other_name = other_name,
-            email = email,
-            phone_number = phone_number,
-            username = username,
-            password = password,
-            registered = datetime.datetime.now().strftime("%H:%M%P %A %d %B %Y"),
-            isAdmin = False
+            user_id=len(user_accounts) + 1,
+            first_name=first_name,
+            last_name=last_name,
+            other_name=other_name,
+            email=email,
+            phone_number=phone_number,
+            username=username,
+            password=password,
+            registered=datetime.datetime.now().strftime("%H:%M%P %A %d %B %Y"),
+            isAdmin=False
         )
 
         payload = first_name, last_name, other_name, email, phone_number, username, password
@@ -38,7 +39,7 @@ class Members(Validations):
                         "status": 201,
                         "response": "User with username {} was added successfully".format(username),
                         "data": new_user
-                    }, 201 
+                    }, 201
         return res
 
     @staticmethod
