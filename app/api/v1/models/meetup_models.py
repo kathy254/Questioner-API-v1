@@ -56,4 +56,4 @@ class Meetups(Validations):
         meetup_item = [item for item in meetup_list if item["meetup_id"] == meetup_id]
         if meetup_item:
             return meetup_item
-        return False
+        return {"message": "Meetup record not found"}

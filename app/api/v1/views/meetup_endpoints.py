@@ -99,22 +99,14 @@ class RsvpToMeetup(Resource):
 
         status = status.lower()
 
-        meetup = meetup_models.Meetups.get_specific_meetup(meetup_id)
-
-
         if (status != "yes" and status != "no" and status != "maybe"):
-            res = {"error": "Status should be a yes, no or maybe"}, 400
+            return {"error": "Status should be a yes, no or maybe"}, 400
 
-        elif meetup:
-            res = {
+        meetup = meetup_models.Meetups.get_specific_meetup(meetup_id)
+        if meetup:
+            return {
                 "status": 201,
                 "data": {
                     "meetup": meetup_id,
                     "status": status
                 }}, 201
-        elif not meetup:
-            res = {
-                "status": 400,
-                "message": "Meetup with id {} not found.".format(meetup_id)
-            }
-        return res
