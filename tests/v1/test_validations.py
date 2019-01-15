@@ -88,6 +88,18 @@ class TestValidations(BaseTest):
         self.assertFalse(test1)
         self.assertFalse(test2)
 
+    def test_valid_password(self):
+        test = self.data.is_valid_password("abdefghi")
+        test1 = self.data.is_valid_password("ABCDEFGH")
+        self.assertFalse(test)
+        self.assertFalse(test1)
+
+    def test_invalid_password(self):
+        test1 = self.data.is_valid_password("abc")
+        test2 = self.data.is_valid_password("123")
+        self.assertTrue(test1)
+        self.assertTrue(test2)
+
     
 
 
