@@ -26,33 +26,30 @@ class TestMeetups(BaseTest):
         self.rsvp_payload = None
 
     def test_create_meetup(self):
-        with self.client:
-            response = self.client.post(create_meetup_url, data=json.dumps(self.meetup_payload), content_type="application/json")
-            result = json.loads(response.data.decode("UTF-8"))
+        response = self.client.post(create_meetup_url, data=json.dumps(self.meetup_payload), content_type="application/json")
+        result = json.loads(response.data.decode("UTF-8"))
 
-            self.assertEqual(result["status"], 201)
-            self.assertEqual(result["message"], "New meetup created successfully")
-            self.assertEqual(response.status_code, 201)
-            self.assertTrue(response.content_type == "application/json")
+        self.assertEqual(result["status"], 201)
+        self.assertEqual(result["message"], "New meetup created successfully")
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(response.content_type == "application/json")
 
     def test_empty_fields(self):
-        with self.client:
-            response1 = self.client.post(create_meetup_url, data=json.dumps(""), content_type="application/json")
-            result1 = json.loads(response1.data.decode("UTF-8"))
+        response1 = self.client.post(create_meetup_url, data=json.dumps(""), content_type="application/json")
+        result1 = json.loads(response1.data.decode("UTF-8"))
 
-            self.assertEqual(result1["message"], "Please fill out all fields")
-            self.assertEqual(response1.status_code, 406)
-            self.assertTrue(response1.content_type == "application/json")
+        self.assertEqual(result1["message"], "Please fill out all fields")
+        self.assertEqual(response1.status_code, 406)
+        self.assertTrue(response1.content_type == "application/json")
 
     def test_white_space(self):
         """ test if data set has whitespace only"""
-        with self.client:
-            response2 = self.client.post(create_meetup_url, data=json.dumps(self.whitespace_payload), content_type="application/json")
-            result2 = json.loads(response2.data.decode("UTF-8"))
+        response2 = self.client.post(create_meetup_url, data=json.dumps(self.whitespace_payload), content_type="application/json")
+        result2 = json.loads(response2.data.decode("UTF-8"))
 
-            self.assertEqual(result2["message"], "Data cannot contain whitespaces only")
-            self.assertEqual(response2.status_code, 406)
-            self.assertTrue(response2.content_type == "application/json")
+        self.assertEqual(result2["message"], "Data cannot contain whitespaces only")
+        self.assertEqual(response2.status_code, 406)
+        self.assertTrue(response2.content_type == "application/json")
 
     def test_get_all_meetups(self):
         self.client.post(create_meetup_url, data=json.dumps(self.meetup_payload), content_type="application/json")

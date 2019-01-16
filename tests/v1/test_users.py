@@ -40,70 +40,65 @@ class TestUser(BaseTest):
         self.invalid_password = None
 
     def test_signup(self):
-        with self.client:
-            response = self.client.post(signup_url, data=json.dumps(self.signup_payload), content_type="application/json")
-            result = json.loads(response.data.decode("UTF-8"))
+        response = self.client.post(signup_url, data=json.dumps(self.signup_payload), content_type="application/json")
+        result = json.loads(response.data.decode("UTF-8"))
 
-            self.assertEqual(result["status"], 201)
-            self.assertEqual(result["response"], "User with username cathy was added successfully")
-            self.assertEqual(response.status_code, 201)
-            self.assertTrue(response.content_type == "application/json")
+        self.assertEqual(result["status"], 201)
+        self.assertEqual(result["response"], "User with username cathy was added successfully")
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(response.content_type == "application/json")
 
     def test_empty_data(self):
-        with self.client:
-            response1 = self.client.post(signup_url, data=json.dumps(""), content_type="application/json")
-            result1 = json.loads(response1.data.decode("UTF-8"))
+        response1 = self.client.post(signup_url, data=json.dumps(""), content_type="application/json")
+        result1 = json.loads(response1.data.decode("UTF-8"))
 
-            self.assertEqual(result1["message"], "Please fill out all the fields")
-            self.assertEqual(response1.status_code, 406)
-            self.assertTrue(response1.content_type == "application/json")
+        self.assertEqual(result1["message"], "Please fill out all the fields")
+        self.assertEqual(response1.status_code, 406)
+        self.assertTrue(response1.content_type == "application/json")
 
     def test_whitespace_data(self):
-        with self.client:
-            response1 = self.client.post(signup_url, data=json.dumps(self.whitespace_payload), content_type="application/json")
-            result1 = json.loads(response1.data.decode("UTF-8"))
+        response1 = self.client.post(signup_url, data=json.dumps(self.whitespace_payload), content_type="application/json")
+        result1 = json.loads(response1.data.decode("UTF-8"))
 
-            self.assertEqual(result1["message"], "Data cannot contain whitespaces only")
-            self.assertEqual(response1.status_code, 406)
-            self.assertTrue(response1.content_type == "application/json")
+        self.assertEqual(result1["message"], "Data cannot contain whitespaces only")
+        self.assertEqual(response1.status_code, 406)
+        self.assertTrue(response1.content_type == "application/json")
 
     def test_incorrect_email(self):
-        with self.client:
-            response1 = self.client.post(signup_url, data=json.dumps(self.invalid_email), content_type="application/json")
-            result1 = json.loads(response1.data.decode("UTF-8"))
+        response1 = self.client.post(signup_url, data=json.dumps(self.invalid_email), content_type="application/json")
+        result1 = json.loads(response1.data.decode("UTF-8"))
 
-            self.assertEqual(result1["message"], "Please enter a valid email address")
-            self.assertEqual(response1.status_code, 406)
-            self.assertTrue(response1.content_type == "application/json")
+        self.assertEqual(result1["message"], "Please enter a valid email address")
+        self.assertEqual(response1.status_code, 406)
+        self.assertTrue(response1.content_type == "application/json")
 
     def test_incorrect_password(self):
-        with self.client:
-            response1 = self.client.post(signup_url, data=json.dumps(self.invalid_password), content_type="application/json")
-            result1 = json.loads(response1.data.decode("UTF-8"))
+        response1 = self.client.post(signup_url, data=json.dumps(self.invalid_password), content_type="application/json")
+        result1 = json.loads(response1.data.decode("UTF-8"))
 
-            self.assertEqual(result1["message"], "Password should be at least 6 characters long")
-            self.assertEqual(response1.status_code, 406)
-            self.assertTrue(response1.content_type == "application/json")
+        self.assertEqual(result1["message"], "Password should be at least 6 characters long")
+        self.assertEqual(response1.status_code, 406)
+        self.assertTrue(response1.content_type == "application/json")
 
     def test_existing_username(self):
-            self.client.post(signup_url, data=json.dumps(self.signup_payload), content_type="application/json")
+        self.client.post(signup_url, data=json.dumps(self.signup_payload), content_type="application/json")
 
-            new_user = {
-                "first_name": "cat",
-                "last_name": "faith",
-                "other_name": "Noone",
-                "email": "me2@gmail.com",
-                "phone_number": "0303030",
-                "username": "cathy",
-                "password": "secret"
-            }
-            response2 = self.client.post(signup_url, data=json.dumps(new_user), content_type="application/json")
-            result3 = json.loads(response2.data.decode("UTF-8"))
+        new_user = {
+            "first_name": "cat",
+            "last_name": "faith",
+            "other_name": "Noone",
+            "email": "me2@gmail.com",
+            "phone_number": "0303030",
+            "username": "cathy",
+            "password": "secret"
+        }
+        response2 = self.client.post(signup_url, data=json.dumps(new_user), content_type="application/json")
+        result3 = json.loads(response2.data.decode("UTF-8"))
 
-            self.assertEqual(result3["status"], 500)
-            self.assertEqual(result3["message"], "This username already exists. Please choose another one.")
-            self.assertEqual(response2.status_code, 500)
-            self.assertTrue(response2.content_type == "application/json")
+        self.assertEqual(result3["status"], 500)
+        self.assertEqual(result3["message"], "This username already exists. Please choose another one.")
+        self.assertEqual(response2.status_code, 500)
+        self.assertTrue(response2.content_type == "application/json")
 
     def test_existing_email(self):
 

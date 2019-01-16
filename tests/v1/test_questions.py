@@ -28,34 +28,37 @@ class TestQuestions(BaseTest):
                                    "votes": 0
                                    }
 
-    def test_post_question(self):
-        with self.client:
-            response = self.client.post(post_question_url, data=json.dumps(self.question_payload), content_type="application/json")
-            result = json.loads(response.data.decode("UTF-8"))
+    def tearDown(self):
+        super().tearDown()
+        self.question_payload = None
+        self.question_one = None
+        self.whitespace_payload = None
 
-            self.assertEqual(result["status"], 201)
-            self.assertEqual(result["message"], "Question posted successfully.")
-            self.assertEqual(response.status_code, 201)
-            self.assertTrue(response.content_type == "application/json")
+    def test_post_question(self):
+        response = self.client.post(post_question_url, data=json.dumps(self.question_payload), content_type="application/json")
+        result = json.loads(response.data.decode("UTF-8"))
+
+        self.assertEqual(result["status"], 201)
+        self.assertEqual(result["message"], "Question posted successfully.")
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(response.content_type == "application/json")
 
     def test_empty_data(self):
-        with self.client:
-            response = self.client.post(post_question_url, data=json.dumps(""), content_type="application/json")
-            result = json.loads(response.data.decode("UTF-8"))
+        response = self.client.post(post_question_url, data=json.dumps(""), content_type="application/json")
+        result = json.loads(response.data.decode("UTF-8"))
 
-            self.assertEqual(result["message"], "Please fill out all the fields")
-            self.assertEqual(response.status_code, 406)
-            self.assertTrue(response.content_type == "application/json")
+        self.assertEqual(result["message"], "Please fill out all the fields")
+        self.assertEqual(response.status_code, 406)
+        self.assertTrue(response.content_type == "application/json")
 
     def test_whitespace_data(self):
-        with self.client:
-            response = self.client.post(post_question_url, data=json.dumps(self.whitespace_payload),
-                                        content_type="application/json")
-            result = json.loads(response.data.decode("UTF-8"))
+        response = self.client.post(post_question_url, data=json.dumps(self.whitespace_payload),
+                                    content_type="application/json")
+        result = json.loads(response.data.decode("UTF-8"))
 
-            self.assertEqual(result["message"], "Data cannot contain whitespaces only")
-            self.assertEqual(response.status_code, 406)
-            self.assertTrue(response.content_type == "application/json")
+        self.assertEqual(result["message"], "Data cannot contain whitespaces only")
+        self.assertEqual(response.status_code, 406)
+        self.assertTrue(response.content_type == "application/json")
 
     def test_get_single_questions(self):
         self.client.post(post_question_url, data=json.dumps(self.question_payload), content_type="application/json")
@@ -72,15 +75,13 @@ class TestQuestions(BaseTest):
         self.assertEqual(result.status_code, 404)
 
     def test_upvote_question(self):
-        with self.client:
-            self.client.post(post_question_url, data=json.dumps(self.question_one), content_type="application/json")
+        self.client.post(post_question_url, data=json.dumps(self.question_one), content_type="application/json")
 
-            response = self.client.patch(upvote_url, content_type="application/json")
-            self.assertEqual(response.status_code, 200)
+        response = self.client.patch(upvote_url, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
 
     def test_downvote_question(self):
-        with self.client:
-            self.client.post(post_question_url, data=json.dumps(self.question_one), content_type="application/json")
+        self.client.post(post_question_url, data=json.dumps(self.question_one), content_type="application/json")
 
-            response2 = self.client.patch(downvote_url, content_type="application/json")
-            self.assertEqual(response2.status_code, 200)
+        response2 = self.client.patch(downvote_url, content_type="application/json")
+        self.assertEqual(response2.status_code, 200)
