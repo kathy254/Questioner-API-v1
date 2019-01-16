@@ -59,19 +59,3 @@ class Validations:
         else:
             res = False
         return res
-
-    def payload(self, items, keys):
-        items = items.keys()
-        if len(items) == len(keys):
-            for item in items:
-                if item not in keys:
-                    return False
-            return True
-        else:
-            return False
-
-    @staticmethod
-    def list_iterator(list):
-        for i in list:
-            if i is None or not i:
-                return False
