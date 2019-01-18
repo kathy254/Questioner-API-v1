@@ -58,14 +58,14 @@ class RegisterUser(Resource):
                     }), 500)
             else:
                 res = make_response(jsonify({
-                    "status": 500,
+                    "status": 400,
                     "message": "This username already exists. Please choose another one."
-                }), 500)
+                }), 400)
         else:
             res = make_response(jsonify({
-                "status": 500,
+                "status": 400,
                 "message": "This email address already exists. Please log in"
-            }), 500)
+            }), 400)
         return res
 
 

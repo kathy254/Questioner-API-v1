@@ -33,8 +33,6 @@ class Meetups(Validations):
             res = {"message": "Data cannot contain whitespaces only"}, 406
         elif self.is_string(strings) is False:
             res = {"message": "Input must be of type string"}, 406
-        elif self.is_valid_date(happeningOn) is False:
-            res = {"message": "Date must be in the format DD-MM-YYYY"}
         else:
             res = meetup_list.append(new_meetup)
             return {
@@ -56,6 +54,33 @@ class Meetups(Validations):
         meetup_item = [meetup for meetup in meetup_list if meetup["meetup_id"] == meetup_id]
         if meetup_item:
             res = meetup_item
+        else:
+            res = False
+        return res
+
+    @staticmethod
+    def get_meetup_by_topic(topic):
+        current_meetup = [meetup for meetup in meetup_list if meetup["topic"] == topic]
+        if current_meetup:
+            res = current_meetup
+        else:
+            res = False
+        return res
+
+    @staticmethod
+    def get_meetup_by_location(location):
+        current_location = [location for location in meetup_list if location["location"] == location]
+        if current_location:
+            res = current_location
+        else:
+            res = False
+        return res
+
+    @staticmethod
+    def get_meetup_by_date(happeningOn):
+        current_date = [date for date in meetup_list if date["happeningOn"] == happeningOn]
+        if current_date:
+            res = current_date
         else:
             res = False
         return res

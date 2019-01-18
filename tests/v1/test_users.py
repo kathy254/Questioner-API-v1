@@ -95,9 +95,9 @@ class TestUser(BaseTest):
         response2 = self.client.post(signup_url, data=json.dumps(new_user), content_type="application/json")
         result3 = json.loads(response2.data.decode("UTF-8"))
 
-        self.assertEqual(result3["status"], 500)
+        self.assertEqual(result3["status"], 400)
         self.assertEqual(result3["message"], "This username already exists. Please choose another one.")
-        self.assertEqual(response2.status_code, 500)
+        self.assertEqual(response2.status_code, 400)
         self.assertTrue(response2.content_type == "application/json")
 
     def test_existing_email(self):
@@ -115,9 +115,9 @@ class TestUser(BaseTest):
         }
         register3 = self.client.post(signup_url, data=json.dumps(payload3), content_type="application/json")
         result = json.loads(register3.data.decode("UTF-8"))
-        self.assertEqual(result["status"], 500)
+        self.assertEqual(result["status"], 400)
         self.assertEqual(result["message"], "This email address already exists. Please log in")
-        self.assertEqual(register3.status_code, 500)
+        self.assertEqual(register3.status_code, 400)
         self.assertTrue(register3.content_type == "application/json")
 
     def test_user_login(self):
