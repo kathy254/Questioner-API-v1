@@ -38,8 +38,31 @@ class CreateMeetup(Resource):
         happeningOn = args["happeningOn"]
         Tags = args["Tags"]
 
-        meetups = meetup_models.Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
-        return meetups
+        meetup_found = meetup_models.Meetups().get_meetup_by_topic(topic)
+        venue_occupied = meetup_models.Meetups().get_meetup_by_location(location)
+        date_booked = meetup_models.Meetups().get_meetup_by_date(happeningOn)
+
+        if meetup_found is False:
+            if venue_occupied is False and date_booked is False:
+                try:
+                    meetups = meetup_models.Meetups().create_meetup(createdOn, location, images, topic, happeningOn, Tags)
+                    res = meetups
+                except Exception as e:
+                    res = make_response(jsonify({
+                        "message": str(e),
+                        "status": "Failed"
+                    }), 500)
+            else:
+                res = make_response(jsonify({
+                "status": 400,
+                "message": "Another meetup is happening at this location on this date. Please choose a different date or venue."
+            }), 400)
+        else:
+            res = make_response(jsonify({
+                "status": 400,
+                "message": "A similar meetup already exists. Please choose a different topic."
+            }), 400)
+        return res
 
 
 @qs_meetups.route('/upcoming')
